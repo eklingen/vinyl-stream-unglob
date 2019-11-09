@@ -34,7 +34,7 @@ This should support most use cases, like Sass `.scss` files, JavaScript `.js` fi
 
 The expansion applies anything found before and after the specified quote to the results, making the it a seamless process.
 
-> *NOTE*: These are directly used to construct the regular expression. So if needed, escape your character(s)! For example, if your string delimiter is '#', then pass the string '\\#' in the `quotes` array.
+> *NOTE*: These are directly used to construct the regular expression. So if needed, escape your character(s)! For example, if your string delimiter is '#', then pass the string '\\\\#' in the `quotes` array.
 
 ```
 unglob({
