@@ -1,0 +1,3 @@
+@import 'glob/one.txt'; @import 'glob/two.txt';
+@import 'vrazl/**/*';
+@import 'glob/one.txt'; @import 'glob/two.txt';

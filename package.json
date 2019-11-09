@@ -1,0 +1,45 @@
+{
+  "name": "@eklingen/vinyl-stream-unglob",
+  "version": "1.0.0",
+  "description": "Vinyl-stream utility -aka Gulp plugin- for expanding globs in file contents.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eklingen/vinyl-stream-unglob.git"
+  },
+  "author": "Elco Klingen",
+  "license": "MIT",
+  "homepage": "https://github.com/eklingen/vinyl-stream-unglob#readme",
+  "bugs": {
+    "url": "https://github.com/eklingen/vinyl-stream-unglob/issues"
+  },
+  "keywords": [
+    "vinyl",
+    "stream",
+    "gulp",
+    "glob",
+    "unglob",
+    "expand"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=13.0.1"
+  },
+  "scripts": {
+    "test": "eslint ./src/ && ava --verbose"
+  },
+  "devDependencies": {
+    "ava": "^2.4.0",
+    "eslint": "^6.6.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-prefer-object-spread": "^1.2.1",
+    "eslint-plugin-simple-import-sort": "^4.0.0",
+    "eslint-plugin-smells": "^1.0.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "vinyl-fs": "^3.0.3"
+  },
+  "dependencies": {
+    "glob": "^7.1.5"
+  }
+}
