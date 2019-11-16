@@ -9,6 +9,8 @@ Also, the resulting expansion is not guaranteed to happen in any particular orde
 
 This is a dumb expansion process. It zeroes in on certain keywords, checks the quoted string, and if it's a glob then it tries to expand it. When writing the results back to the file contents, it simply prepend and appends the rest of the string around the filename for every result. If you need to do something with the rest of the line, you can also use the callback option for that.
 
+> *NOTE*: This only works on files directly pass into the stream. So if you pass in an entry point, it will only work in that file.
+
 ## Installation
 
 `yarn install`. Or `npm install`. Or just copy the files to your own project.

@@ -1,3 +1,8 @@
+// Vinyl-stream utility -aka Gulp plugin- for expanding globs in file contents.
+// This easily enables globbing support to any file format in the stream.
+//
+// NOTE: This only works on files directly pass into the stream.
+// So if you pass in an entry point, it will only work in that file.
 
 const { Transform } = require('stream')
 
