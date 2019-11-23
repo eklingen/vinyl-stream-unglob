@@ -4,7 +4,7 @@ import { readFileSync } from 'fs'
 import { Transform } from 'stream'
 import { src } from 'vinyl-fs'
 
-import unglob from '../src/unglob.js'
+import unglob from '../index.js'
 
 // Please note, these tests all pass `sort: 'a-z'` to `unglob()` unless sorting differently.
 // This is for reproducible results, no matter the order the file system prefers.
