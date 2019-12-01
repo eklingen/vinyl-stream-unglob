@@ -9,7 +9,12 @@ Also, the resulting expansion is not guaranteed to happen in any particular orde
 
 This is a dumb expansion process. It zeroes in on certain keywords, checks the quoted string, and if it's a glob then it tries to expand it. When writing the results back to the file contents, it simply prepend and appends the rest of the string around the filename for every result. If you need to do something with the rest of the line, you can also use the callback option for that.
 
-> *NOTE*: This only works on files directly pass into the stream. So if you pass in an entry point, it will only work in that file.
+> *NOTE*: This only works on files directly pass into the stream. So if you pass in an entry point, it will only work in that file! Not in any files included/imported/et al.
+
+TODO:
+
+- Write a sass unglob plugin, so it works in not just the entry point.
+- Write a webpack unglob plugin, so it works in not just the entry point.
 
 ## Installation
 
@@ -17,7 +22,7 @@ This is a dumb expansion process. It zeroes in on certain keywords, checks the q
 
 ## Usage
 
-```
+```javascript
 const unglob = require('@eklingen/vinyl-stream-unglob')
 stream.pipe(unglob())
 ```
@@ -38,7 +43,7 @@ The expansion applies anything found before and after the specified quote to the
 
 > *NOTE*: These are directly used to construct the regular expression. So if needed, escape your character(s)! For example, if your string delimiter is '#', then pass the string '\\\\#' in the `quotes` array.
 
-```
+```javascript
 unglob({
   keywords: [ 'import', 'include', 'require', 'from' ],
   quotes: [ "'", '"', '`' ],
@@ -49,18 +54,18 @@ Here are a few examples of non-existent languages. To unpack the example in the 
 
 #### Example 1
 
-```
+```javascript
 @!badjoozle 'test/**/*' as test
 ```
 
-```
+```javascript
 unglob({
   keywords: [ 'badjoozle' ],
   quotes: [ "'" ],
 })
 ```
 
-```
+```javascript
 @!badjoozle 'test/folder-one/ooze' as test
 @!badjoozle 'test/folder-two/narf' as test
 @!badjoozle 'test/folder-two/znart' as test
@@ -68,19 +73,19 @@ unglob({
 
 #### Example 2
 
-```
+```javascript
 blurpy snatch out of ``test/**/*``
 snorfy inside #test/**/*#
 ```
 
-```
+```javascript
 unglob({
   keywords: [ 'blurpy', 'snorfy' ],
   quotes: [ '``', '\\#' ],
 })
 ```
 
-```
+```javascript
 blurpy snatch out of ``test/folder-one/ooze``
 blurpy snatch out of ``test/folder-two/narf``
 blurpy snatch out of ``test/folder-two/znart``
@@ -93,7 +98,7 @@ snorfy inside #test/folder-two/znart#
 
 By default, the lines are joined by a space. This is a quick and easy way to prevent these changes from affecting any possible source map, since the results will still be located on the same line. However, if you add a comment of some sort on the end of a line with a glob in it, this could fail. In that case, set the `lineJoiner` option use newlines via `'\n'`. You could use anything, really. You could also do this yourself via the callback function.
 
-```
+```javascript
 unglob({
   lineJoiner: '\n'
 })
@@ -109,7 +114,7 @@ Possible values are:
 
 Sort the results by alphabetical order.
 
-```
+```javascript
 unglob({
   sort: 'a-z'
 })
@@ -119,7 +124,7 @@ unglob({
 
 Sort the results by reverse alphabetical order.
 
-```
+```javascript
 unglob({
   sort: 'z-a'
 })
@@ -129,7 +134,7 @@ unglob({
 
 You can also supply your own sort function.
 
-```
+```javascript
 unglob({
   sort: results => results.sort((a, b) => (a.filepath > b.filepath) ? 1 : -1),
 })
@@ -139,21 +144,21 @@ unglob({
 
 You can specify a callback function that receives and returns the results. This is an `array of objects`, with each object containing the `prefix`, `quote1`, `filepath`, `quote2` and `suffix` properties. Manipulate these however you wish before returning the array. By using this callback, you can further sort, filter or append the results before they're injected back into the source file.
 
-#### Example 1
+#### Example one
 
 Reversing the results of the glob.
 
-```
+```javascript
 unglob({
   callback: results => results.reverse()
 })
 ```
 
-#### Example 2
+#### Example two
 
 Appending a comment at the end of each line.
 
-```
+```javascript
 unglob({
   callback: results => results.map(result => {
     result.suffix += ' // has been expanded!'
@@ -166,7 +171,7 @@ unglob({
 
 Globs that return no results are replaced by an empty line. This is to prevent 'leftover' glob from passing through. If you disable the `clearEmpty` option, it will leave globs without results untouched.
 
-```
+```javascript
 unglob({ clearEmpty: false })
 ```
 
@@ -174,7 +179,7 @@ unglob({ clearEmpty: false })
 
 Globs are checked 'as-is', which means, exactly how you entered them. If a glob would match multiple file extensions, but it's impossible to add the extension to the glob string in the source file, it can be automagically added via this option. Set `magicExtension` to `true` to append the file extension of the parent file to every glob string that doesn't specify one.
 
-```
+```javascript
 unglob({
   magicExtension: true
 })
