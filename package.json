@@ -34,11 +34,11 @@
     "glob": "^7.1.6"
   },
   "devDependencies": {
-    "ava": "^2.4.0",
-    "eslint": "^6.8.0",
-    "eslint-plugin-node": "^11.0.0",
+    "ava": "^3.8.2",
+    "eslint": "^7.2.0",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prefer-object-spread": "^1.2.1",
-    "eslint-plugin-simple-import-sort": "^5.0.2",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
     "eslint-plugin-smells": "^1.0.1",
     "vinyl-fs": "^3.0.3"
   }
