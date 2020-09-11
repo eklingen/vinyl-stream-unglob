@@ -1,6 +1,6 @@
 {
   "name": "@eklingen/vinyl-stream-unglob",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Vinyl-stream utility -aka Gulp plugin- for expanding globs in file contents.",
   "repository": {
     "type": "git",
