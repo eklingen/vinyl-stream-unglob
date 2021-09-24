@@ -28,7 +28,7 @@
     "node": ">=12.13.0"
   },
   "scripts": {
-    "test": "echo 'Testing...'; ava; echo 'Linting...'; eslint index.js --fix;"
+    "test": "echo '** TODO: Write tests! **'; echo 'Linting...'; eslint index.js --fix;"
   },
   "dependencies": {
     "glob": "^7.2.0"
