@@ -7,7 +7,7 @@
 const { Transform } = require('stream')
 
 const DEFAULT_OPTIONS = {
-  keywords: ['import', 'include', 'require', 'from'],
+  keywords: ['import', 'include', 'require', 'from', 'use'],
   quotes: ["'", '"', '`'],
   lineJoiner: ' ',
   sort: false,
