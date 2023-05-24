@@ -31,7 +31,7 @@
     "test": "echo '** TODO: Write tests! **'; echo 'Linting...'; eslint index.js --fix;"
   },
   "dependencies": {
-    "glob": "^8.0.3"
+    "glob": "^10.2.6"
   },
   "devDependencies": {
     "ava": "^4.3.0",
