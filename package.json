@@ -32,7 +32,7 @@
     "test": "echo '** TODO: Write tests! **';"
   },
   "dependencies": {
-    "glob": "^10.2.6"
+    "glob": "^10.3.10"
   },
   "devDependencies": {
     "ava": "^4.3.0",
