@@ -36,6 +36,6 @@
   },
   "devDependencies": {
     "ava": "^4.3.0",
-    "vinyl-fs": "^3.0.3"
+    "vinyl-fs": "^4.0.0"
   }
 }

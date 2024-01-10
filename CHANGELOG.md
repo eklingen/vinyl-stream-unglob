@@ -1,6 +1,7 @@
 
 # Changelog
 
+v3.0.5 - (chore) vinyl fs dep bump
 v3.0.4 - Bumped glob dependency
 v3.0.3 - DevEnv changes
 v3.0.2 - Upgrade dependencies
