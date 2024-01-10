@@ -1,6 +1,7 @@
 
 # Changelog
 
+v3.0.3 - DevEnv changes
 v3.0.2 - Upgrade dependencies
 v3.0.1 - Added use keyword to default options to unglob
 v3.0.0 - Upgrade dependencies

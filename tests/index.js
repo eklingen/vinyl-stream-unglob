@@ -1,7 +1,5 @@
-
 import test from 'ava'
 import { readFileSync } from 'fs'
-import { Transform } from 'stream'
 import { src } from 'vinyl-fs'
 
 import unglob from '../index.js'
@@ -17,7 +15,7 @@ test('should not fail if file contents is empty', async t => {
 
     const stream = src('./tests/source/empty-file')
     stream.pipe(unglob())
-    stream.on('data', file => result = file.contents ? file.contents.toString('utf8').trim() : '')
+    stream.on('data', file => (result = file.contents ? file.contents.toString('utf8').trim() : ''))
     stream.on('end', () => resolve(result))
     stream.on('error', () => reject())
     stream.destroy()
@@ -34,7 +32,7 @@ test('should not fail if file contains no globs', async t => {
 
     const stream = src('./tests/source/without-globs.txt')
     stream.pipe(unglob())
-    stream.on('data', file => result = file.contents ? file.contents.toString('utf8').trim() : '')
+    stream.on('data', file => (result = file.contents ? file.contents.toString('utf8').trim() : ''))
     stream.on('end', () => resolve(result))
     stream.on('error', () => reject())
     stream.destroy()
@@ -51,7 +49,7 @@ test('should unfold globs', async t => {
 
     const stream = src('./tests/source/glob.txt')
     stream.pipe(unglob({ sort: 'a-z' }))
-    stream.on('data', file => result = file.contents ? file.contents.toString('utf8').trim() : null)
+    stream.on('data', file => (result = file.contents ? file.contents.toString('utf8').trim() : null))
     stream.on('end', () => resolve(result))
     stream.on('error', () => reject())
     stream.destroy()
@@ -67,11 +65,13 @@ test('should unfold custom keywords, if given an array of properly escaped strin
     let result
 
     const stream = src('./tests/source/custom-keywords.txt')
-    stream.pipe(unglob({
-      sort: 'a-z',
-      keywords: ['blorflax']
-    }))
-    stream.on('data', file => result = file.contents ? file.contents.toString('utf8').trim() : null)
+    stream.pipe(
+      unglob({
+        sort: 'a-z',
+        keywords: ['blorflax'],
+      })
+    )
+    stream.on('data', file => (result = file.contents ? file.contents.toString('utf8').trim() : null))
     stream.on('end', () => resolve(result))
     stream.on('error', () => reject())
     stream.destroy()
@@ -87,11 +87,13 @@ test('should unfold custom quotes, if given an array of properly escaped strings
     let result
 
     const stream = src('./tests/source/custom-quotes.txt')
-    stream.pipe(unglob({
-      sort: 'a-z',
-      quotes: ['\\#']
-    }))
-    stream.on('data', file => result = file.contents ? file.contents.toString('utf8').trim() : null)
+    stream.pipe(
+      unglob({
+        sort: 'a-z',
+        quotes: ['\\#'],
+      })
+    )
+    stream.on('data', file => (result = file.contents ? file.contents.toString('utf8').trim() : null))
     stream.on('end', () => resolve(result))
     stream.on('error', () => reject())
     stream.destroy()
@@ -107,11 +109,13 @@ test('should use a custom line joiner, if given', async t => {
     let result
 
     const stream = src('./tests/source/custom-line-joiner.txt')
-    stream.pipe(unglob({
-      sort: 'a-z',
-      lineJoiner: ' // EOL\n'
-    }))
-    stream.on('data', file => result = file.contents ? file.contents.toString('utf8').trim() : null)
+    stream.pipe(
+      unglob({
+        sort: 'a-z',
+        lineJoiner: ' // EOL\n',
+      })
+    )
+    stream.on('data', file => (result = file.contents ? file.contents.toString('utf8').trim() : null))
     stream.on('end', () => resolve(result))
     stream.on('error', () => reject())
     stream.destroy()
@@ -127,10 +131,12 @@ test('sort sort by reverse order, if set', async t => {
     let result
 
     const stream = src('./tests/source/sort-reverse.txt')
-    stream.pipe(unglob({
-      sort: 'z-a'
-    }))
-    stream.on('data', file => result = file.contents ? file.contents.toString('utf8').trim() : null)
+    stream.pipe(
+      unglob({
+        sort: 'z-a',
+      })
+    )
+    stream.on('data', file => (result = file.contents ? file.contents.toString('utf8').trim() : null))
     stream.on('end', () => resolve(result))
     stream.on('error', () => reject())
     stream.destroy()
@@ -146,10 +152,12 @@ test('should sort by custom sort function, if given', async t => {
     let result
 
     const stream = src('./tests/source/sort-reverse.txt')
-    stream.pipe(unglob({
-      sort: results => results.sort((a, b) => (a.filepath > b.filepath) ? 1 : -1)
-    }))
-    stream.on('data', file => result = file.contents ? file.contents.toString('utf8').trim() : null)
+    stream.pipe(
+      unglob({
+        sort: results => results.sort((a, b) => (a.filepath > b.filepath ? 1 : -1)),
+      })
+    )
+    stream.on('data', file => (result = file.contents ? file.contents.toString('utf8').trim() : null))
     stream.on('end', () => resolve(result))
     stream.on('error', () => reject())
     stream.destroy()
@@ -165,10 +173,12 @@ test('should not fail if custom sort function does not return the expected data'
     let result
 
     const stream = src('./tests/source/glob.txt')
-    stream.pipe(unglob({
-      sort: results => new Error('Error!')
-    }))
-    stream.on('data', file => result = file.contents ? file.contents.toString('utf8').trim() : null)
+    stream.pipe(
+      unglob({
+        sort: results => new Error('Error!'),
+      })
+    )
+    stream.on('data', file => (result = file.contents ? file.contents.toString('utf8').trim() : null))
     stream.on('end', () => resolve(result))
     stream.on('error', () => reject())
     stream.destroy()
@@ -184,14 +194,17 @@ test('should apply custom callback function, if given', async t => {
     let result
 
     const stream = src('./tests/source/custom-callback.txt')
-    stream.pipe(unglob({
-      sort: 'a-z',
-      callback: results => results.map(result => {
-        result.suffix += ' /* via custom callback */'
-        return result
+    stream.pipe(
+      unglob({
+        sort: 'a-z',
+        callback: results =>
+          results.map(result => {
+            result.suffix += ' /* via custom callback */'
+            return result
+          }),
       })
-    }))
-    stream.on('data', file => result = file.contents ? file.contents.toString('utf8').trim() : null)
+    )
+    stream.on('data', file => (result = file.contents ? file.contents.toString('utf8').trim() : null))
     stream.on('end', () => resolve(result))
     stream.on('error', () => reject())
     stream.destroy()
@@ -207,11 +220,13 @@ test('should not fail when custom callback function does not return the expected
     let result
 
     const stream = src('./tests/source/glob.txt')
-    stream.pipe(unglob({
-      sort: 'a-z',
-      callback: results => new Error('Error!')
-    }))
-    stream.on('data', file => result = file.contents ? file.contents.toString('utf8').trim() : null)
+    stream.pipe(
+      unglob({
+        sort: 'a-z',
+        callback: results => new Error('Error!'),
+      })
+    )
+    stream.on('data', file => (result = file.contents ? file.contents.toString('utf8').trim() : null))
     stream.on('end', () => resolve(result))
     stream.on('error', () => reject())
     stream.destroy()
@@ -227,10 +242,12 @@ test('should remove empty globs by default', async t => {
     let result
 
     const stream = src('./tests/source/clear-empty.txt')
-    stream.pipe(unglob({
-      sort: 'a-z'
-    }))
-    stream.on('data', file => result = file.contents ? file.contents.toString('utf8').trim() : null)
+    stream.pipe(
+      unglob({
+        sort: 'a-z',
+      })
+    )
+    stream.on('data', file => (result = file.contents ? file.contents.toString('utf8').trim() : null))
     stream.on('end', () => resolve(result))
     stream.on('error', () => reject())
     stream.destroy()
@@ -246,11 +263,13 @@ test('should keep empty globs if `clearEmpty` is false', async t => {
     let result
 
     const stream = src('./tests/source/dont-clear-empty.txt')
-    stream.pipe(unglob({
-      sort: 'a-z',
-      clearEmpty: false
-    }))
-    stream.on('data', file => result = file.contents ? file.contents.toString('utf8').trim() : null)
+    stream.pipe(
+      unglob({
+        sort: 'a-z',
+        clearEmpty: false,
+      })
+    )
+    stream.on('data', file => (result = file.contents ? file.contents.toString('utf8').trim() : null))
     stream.on('end', () => resolve(result))
     stream.on('error', () => reject())
     stream.destroy()
@@ -266,11 +285,13 @@ test('should ignore parent file extension, if `magicExtension` is false', async 
     let result
 
     const stream = src('./tests/source/no-magic-extension.txt')
-    stream.pipe(unglob({
-      sort: 'a-z',
-      magicExtension: false
-    }))
-    stream.on('data', file => result = file.contents ? file.contents.toString('utf8').trim() : null)
+    stream.pipe(
+      unglob({
+        sort: 'a-z',
+        magicExtension: false,
+      })
+    )
+    stream.on('data', file => (result = file.contents ? file.contents.toString('utf8').trim() : null))
     stream.on('end', () => resolve(result))
     stream.on('error', () => reject())
     stream.destroy()
@@ -286,11 +307,13 @@ test('should add parent file extension to glob when needed, if `magicExtension` 
     let result
 
     const stream = src('./tests/source/magic-extension.txt')
-    stream.pipe(unglob({
-      sort: 'a-z',
-      magicExtension: true
-    }))
-    stream.on('data', file => result = file.contents ? file.contents.toString('utf8').trim() : null)
+    stream.pipe(
+      unglob({
+        sort: 'a-z',
+        magicExtension: true,
+      })
+    )
+    stream.on('data', file => (result = file.contents ? file.contents.toString('utf8').trim() : null))
     stream.on('end', () => resolve(result))
     stream.on('error', () => reject())
     stream.destroy()

@@ -13,15 +13,15 @@ const DEFAULT_OPTIONS = {
   sort: false,
   callback: results => results,
   clearEmpty: true,
-  magicExtension: false
+  magicExtension: false,
 }
 
 const SORTERS = {
-  'a-z': results => results.sort((a, b) => (a.filepath > b.filepath) ? -1 : 1),
-  'z-a': results => results.sort((a, b) => (a.filepath > b.filepath) ? 1 : -1)
+  'a-z': results => results.sort((a, b) => (a.filepath > b.filepath ? -1 : 1)),
+  'z-a': results => results.sort((a, b) => (a.filepath > b.filepath ? 1 : -1)),
 }
 
-function unfold (line, prefix, quote1, fileglob, quote2, suffix, position, contents, file, options) {
+function unfold(line, prefix, quote1, fileglob, quote2, suffix, position, contents, file, options) {
   const { hasMagic, sync } = require('glob')
 
   // Check if the string is a glob. Return early if not
@@ -81,7 +81,7 @@ function unfold (line, prefix, quote1, fileglob, quote2, suffix, position, conte
   return lines.join(options.lineJoiner)
 }
 
-function unglob (options = {}) {
+function unglob(options = {}) {
   options = { ...DEFAULT_OPTIONS, ...options }
 
   options.keywords = Array.isArray(options.keywords) ? options.keywords : DEFAULT_OPTIONS.keywords
@@ -93,7 +93,7 @@ function unglob (options = {}) {
   // Full regex for reference: /^(.*(?:import|include|require|from)+(?:.+))(['"`])(.*)(['"`])(.*)$/gm
   const regex = new RegExp(`^(.*(?:${keywords})+(?:.+))([${quotes}])(.*)([${quotes}])(.*)$`, 'gm')
 
-  function transform (file, encoding, callback) {
+  function transform(file, encoding, callback) {
     if (!file.isBuffer() || !file.contents || !file.contents.length) {
       return callback(null, file)
     }
