@@ -1,6 +1,10 @@
 
 # Vinyl-stream Unglob
 
+> This project was originally developed independently and has been used in projects at [Fabrique](https//www.fabrique.nl) and [Q42](https://www.q42.nl).
+> It remains publicly available and can be forked or maintained independently if needed.
+> No guarantees are provided for long-term maintenance.
+
 This Vinyl-stream utility -aka Gulp plugin- expands globs in file contents. This enables globbing support for nearly any file format in the stream.
 
 The only restriction is that there needs to be an identifying keyword, before a quoted string. You can change the keywords or quote character list via the options.
